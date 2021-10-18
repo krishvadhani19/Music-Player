@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+</head>
+
+<body>
+    <!-- Main Card -->
+    <div class="main_card">
+
+        <!-- Music Card -->
+        <div class="music_card">
+
+            <!-- Title -->
+            <div id="title">
+                It ain't me
+            </div>
+
+            <!-- Artist -->
+            <div id="artist">
+                Selena Gomez
+            </div>
+
+            <!-- Image Card -->
+            <div class="img_card">
+                <img src="images/1.jpg" alt="" id='img'>
+            </div>
+
+            <!-- Audio -->
+            <audio src="music/1.mp3" controls></audio>
+
+
+            <!-- Music Controls -->
+            <div class="music_controls">
+                <i class="fas fa-backward" id="backward" title="Previous"></i>
+                <i class="fas fa-play" id="play" title="Play"></i>
+                <i class="fas fa-forward " id="forward" title="Next"></i>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+<script>
+    const play = document.getElementById('play');
+    const music = document.querySelector('audio');
+    const img = document.querySelector('img');
+    let isplay = false;
+
+    const playMusic = () => {
+        isplay = true;
+        music.play();
+        play.classList.replace('fa-play', 'fa-pause');
+        img.classList.add('anime');
+    };
+
+    const pauseMusic = () => {
+        isplay = false;
+        music.pause();
+        play.classList.replace('fa-pause', 'fa-play');
+        img.classList.remove('anime');
+    };
+
+
+    play.addEventListener('click', () => {
+        isplay ? pauseMusic() : playMusic();
+    });
+
+
+    const artist = document.getElementById('artist')
+    const title = document.getElementById('title')
+    const backward = document.getElementById('backward')
+    const forward = document.getElementById('forward')
+
+
+    const songs = [{
+        title: 'It aint me',
+        artist: 'Selena Gomez',
+        name: '1',
+    }, {
+        title: 'Beleiver',
+        artist: 'Imagine Dragons',
+        name: '2',
+    }, {
+        title: 'Sucker',
+        artist: 'Jonas Brothers',
+        name: '3',
+    }];
+
+    console.log(songs.length)
+
+    const loadsongs = (index) => {
+        title.textContent = songs[index].title;
+        artist.textContent = songs[index].artist;
+        music.src = `music/${songs[index].name}.mp3`
+        img.src = `images/${songs[index].name}.jpg`
+    }
+
+    // loadsongs(songs[0]);
+
+    let index = 0;
+    const nextsong = () => {
+        index = (index + 1) % songs.length;
+        loadsongs(index)
+    }
+    const prevsong = () => {
+        index = (index - 1);
+        if (index < 0) {
+            index + songs.length;
+        }
+        loadsongs(index)
+    }
+
+    backward.addEventListener('click', prevsong());
+    forward.addEventListener('click', nextsong());
+</script>
+
+</html>
